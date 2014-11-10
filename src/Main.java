@@ -7,6 +7,7 @@ public class Main extends Applet implements Runnable {
 
 	private Image image;
 	private Graphics second;
+	private Ball ball;
 
 	@Override
 	public void init() {
@@ -19,14 +20,14 @@ public class Main extends Applet implements Runnable {
 
 	@Override
 	public void start() {
-
+		ball = new Ball(0, 0);
 		Thread t = new Thread(this);
 		t.start();
 	}
 
 	@Override
 	public void paint(Graphics g) {
-
+		g.fillOval(ball.getX(),ball.getY(), 30, 30);
 	}
 
 	@Override
@@ -57,6 +58,7 @@ public class Main extends Applet implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
+			ball.move();
 			repaint();
 			try {
 				Thread.sleep(17);
