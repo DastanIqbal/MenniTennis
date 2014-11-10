@@ -1,8 +1,12 @@
+import javax.swing.JFrame;
 
 public class Game {
 
-	public Game() {
-		// TODO Auto-generated constructor stub
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Mini Tennis");
+		frame.setSize(300, 300);
+		frame.setVisible(true);
+		frame.setFocusable(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
 }
