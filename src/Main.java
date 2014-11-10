@@ -2,12 +2,15 @@ import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class Main extends Applet implements Runnable {
+public class Main extends Applet implements Runnable, KeyListener {
 
 	private Image image;
 	private Graphics second;
-	private Ball ball;
+	public static Ball ball;
+	private Brick brick;
 
 	@Override
 	public void init() {
@@ -16,18 +19,23 @@ public class Main extends Applet implements Runnable {
 		setBackground(Color.WHITE);
 		setFocusable(true);
 
+		addKeyListener(this);
+
 	}
 
 	@Override
 	public void start() {
 		ball = new Ball(0, 0);
+		brick = new Brick(200, 370);
 		Thread t = new Thread(this);
 		t.start();
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		g.fillOval(ball.getX(),ball.getY(), 30, 30);
+
+		g.fillOval(ball.getX(), ball.getY(), 20, 20);
+		g.fillRect(brick.getX(), brick.getY(), 50, 10);
 	}
 
 	@Override
@@ -58,6 +66,7 @@ public class Main extends Applet implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
+			brick.update();
 			ball.move();
 			repaint();
 			try {
@@ -67,6 +76,29 @@ public class Main extends Applet implements Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_LEFT:
+			brick.moveLeft();
+			break;
+		case KeyEvent.VK_RIGHT:
+			brick.moveRight();
+			break;
+
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
 	}
 
 }

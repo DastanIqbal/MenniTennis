@@ -1,20 +1,23 @@
+import java.awt.Rectangle;
 import java.util.Random;
 
 public class Ball {
 
-	private final int SPEEDX = 15;
-	private final int SPEEDY = 10;
+	private final int SPEEDX = 10;
+	private final int SPEEDY = 8;
 	private final int RANDOMX = 15;
 	private final int RANDOMY = 10;
 
 	private int x, y, dx, dy, speedX = SPEEDX, speedY = SPEEDY;
 	boolean iscollideX = false;
 	boolean iscollideY = false;
-	Random r;
+	private Random r;
+	public Rectangle rect;
 
 	public Ball(int x, int y) {
 		this.x = x;
 		this.y = y;
+		rect = new Rectangle();
 		r = new Random();
 	}
 
@@ -38,6 +41,9 @@ public class Ball {
 
 		x += speedX + dx;
 		y += speedY + dy;
+
+		
+		rect.setBounds(x, y, 20, 20);
 	}
 
 	private void detectCollision() {
