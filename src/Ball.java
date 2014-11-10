@@ -1,28 +1,66 @@
+import java.util.Random;
+
 public class Ball {
 
-	private int x, y, speed = 2;
+	private final int SPEEDX = 15;
+	private final int SPEEDY = 10;
+	private final int RANDOMX = 15;
+	private final int RANDOMY = 10;
+
+	private int x, y, dx, dy, speedX = SPEEDX, speedY = SPEEDY;
+	boolean iscollideX = false;
+	boolean iscollideY = false;
+	Random r;
 
 	public Ball(int x, int y) {
 		this.x = x;
 		this.y = y;
+		r = new Random();
 	}
 
 	public void move() {
-		if (x >= 0 && x<370) {
-			x += speed;
-		}
-		
-		if (y >= 0 && y<370) {
-			y += speed;
+		if (x + dx < 0) {
+			speedX = SPEEDX;
 		}
 
-		// if (x >= 0 && x <= 380) {
-		// x -= speed;
-		// }
-		//
-		// if (y >= 0 && y <= 380) {
-		// y -= speed;
-		// }
+		if (x + dx > 368) {
+			speedX = -SPEEDX;
+		}
+
+		if (y + dy < 0) {
+			speedY = SPEEDY;
+		}
+		if (y + dy > 368) {
+			speedY = -SPEEDY;
+		}
+
+		detectCollision();
+
+		x += speedX + dx;
+		y += speedY + dy;
+	}
+
+	private void detectCollision() {
+
+		// Right Side
+		if (x >= 368) {
+			dx = -r.nextInt(RANDOMX);
+		}
+
+		// Bottom Side
+		if (y >= 368) {
+			dy = -r.nextInt(RANDOMY);
+		}
+
+		// Left Side
+		if (x <= 0) {
+			dx = r.nextInt(RANDOMX);
+		}
+
+		// Top Side
+		if (y <= 0) {
+			dy = r.nextInt(RANDOMY);
+		}
 	}
 
 	/**
@@ -40,13 +78,6 @@ public class Ball {
 	}
 
 	/**
-	 * @return the speed
-	 */
-	public int getSpeed() {
-		return speed;
-	}
-
-	/**
 	 * @param x
 	 *            the x to set
 	 */
@@ -60,14 +91,6 @@ public class Ball {
 	 */
 	public void setY(int y) {
 		this.y = y;
-	}
-
-	/**
-	 * @param speed
-	 *            the speed to set
-	 */
-	public void setSpeed(int speed) {
-		this.speed = speed;
 	}
 
 }
