@@ -3,69 +3,91 @@ import java.util.Random;
 
 public class Ball {
 
-	private final int SPEEDX = 10;
-	private final int SPEEDY = 8;
-	private final int RANDOMX = 15;
-	private final int RANDOMY = 10;
+	private int SPEEDX = 3;
+	private int SPEEDY = 3;
+	private int RANDOMX = 15;
+	private int RANDOMY = 10;
 
 	private int x, y, dx, dy, speedX = SPEEDX, speedY = SPEEDY;
 	boolean iscollideX = false;
 	boolean iscollideY = false;
 	private Random r;
 	public Rectangle rect;
+	Main main;
+	Brick brick;
+	public boolean isgameover=false;
 
-	public Ball(int x, int y) {
+	public Ball(int x, int y, Main main, Brick brick) {
 		this.x = x;
 		this.y = y;
+		this.main = main;
 		rect = new Rectangle();
 		r = new Random();
+		this.brick = brick;
+	}
+
+	/**
+	 * @return the sPEEDX
+	 */
+	public int getSPEEDX() {
+		return SPEEDX;
+	}
+
+	/**
+	 * @return the sPEEDY
+	 */
+	public int getSPEEDY() {
+		return SPEEDY;
+	}
+
+	/**
+	 * @param sPEEDX
+	 *            the sPEEDX to set
+	 */
+	public void setSPEEDX(int sPEEDX) {
+		SPEEDX = sPEEDX;
+	}
+
+	/**
+	 * @param sPEEDY
+	 *            the sPEEDY to set
+	 */
+	public void setSPEEDY(int sPEEDY) {
+		SPEEDY = sPEEDY;
 	}
 
 	public void move() {
-		if (x + dx < 0) {
+		
+		x += speedX;
+		y += speedY;
+		
+		if (x < 0) {
 			speedX = SPEEDX;
 		}
 
-		if (x + dx > 368) {
+		if (x > main.getSize().width) {
 			speedX = -SPEEDX;
 		}
 
-		if (y + dy < 0) {
+		if (y < 0) {
 			speedY = SPEEDY;
 		}
-		if (y + dy > 368) {
-			speedY = -SPEEDY;
+		if (y > main.getSize().height) {
+			//speedY = -SPEEDY;
+			isgameover=true;
 		}
 
 		detectCollision();
 
-		x += speedX + dx;
-		y += speedY + dy;
-
-		
-		rect.setBounds(x, y, 20, 20);
+		rect.setBounds(x - 10, y - 10, 20, 20);
 	}
 
 	private void detectCollision() {
 
-		// Right Side
-		if (x >= 368) {
-			dx = -r.nextInt(RANDOMX);
-		}
-
-		// Bottom Side
-		if (y >= 368) {
-			dy = -r.nextInt(RANDOMY);
-		}
-
-		// Left Side
-		if (x <= 0) {
-			dx = r.nextInt(RANDOMX);
-		}
-
-		// Top Side
-		if (y <= 0) {
-			dy = r.nextInt(RANDOMY);
+		if (x >= brick.getX() && x <= brick.getX() + 100) {
+			if (y >= brick.getY()-10) {
+				speedY = -SPEEDY;
+			}
 		}
 	}
 

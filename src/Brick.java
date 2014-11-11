@@ -6,16 +6,14 @@ public class Brick {
 
 	private int x, y, speed;
 	private Rectangle rect;
+	Main main;
 
-	public Brick(int x, int y) {
+	public Brick(int x, int y, Main main) {
 		this.x = x;
 		this.y = y;
-		speed = 5;
+		speed = 10;
 		rect = new Rectangle();
-	}
-
-	public void update() {
-	//	detectCollision();
+		this.main = main;
 	}
 
 	public void moveLeft() {
@@ -26,7 +24,6 @@ public class Brick {
 		}
 
 		rect.setBounds(x, y, 50, 10);
-		detectCollision();
 	}
 
 	public void moveRight() {
@@ -37,13 +34,6 @@ public class Brick {
 		}
 
 		rect.setBounds(x, y, 50, 10);
-		detectCollision();
-	}
-
-	private void detectCollision() {
-		if (rect.intersects(Main.ball.rect)) {
-			Logging.Log("collision");
-		}
 	}
 
 	public void stop() {

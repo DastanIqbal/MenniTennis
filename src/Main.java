@@ -9,7 +9,7 @@ public class Main extends Applet implements Runnable, KeyListener {
 
 	private Image image;
 	private Graphics second;
-	public static Ball ball;
+	public Ball ball;
 	private Brick brick;
 
 	@Override
@@ -25,17 +25,24 @@ public class Main extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void start() {
-		ball = new Ball(0, 0);
-		brick = new Brick(200, 370);
+		brick = new Brick(0, 370, this);
+		ball = new Ball(0, 0, this, brick);
 		Thread t = new Thread(this);
 		t.start();
 	}
 
 	@Override
 	public void paint(Graphics g) {
-
-		g.fillOval(ball.getX(), ball.getY(), 20, 20);
-		g.fillRect(brick.getX(), brick.getY(), 50, 10);
+		if (!ball.isgameover) {
+			g.setColor(Color.RED);
+			g.fillOval(ball.getX(), ball.getY(), 20, 20);
+			g.setColor(Color.BLUE);
+			g.fillRect(brick.getX(), brick.getY(), 100, 10);
+		} else {
+			setBackground(Color.BLACK);
+			g.setColor(Color.WHITE);
+			g.drawString("Game Over", (getWidth()-30) / 2, getHeight() / 2);
+		}
 	}
 
 	@Override
@@ -65,8 +72,8 @@ public class Main extends Applet implements Runnable, KeyListener {
 
 	@Override
 	public void run() {
+
 		while (true) {
-			brick.update();
 			ball.move();
 			repaint();
 			try {
@@ -76,6 +83,7 @@ public class Main extends Applet implements Runnable, KeyListener {
 				e.printStackTrace();
 			}
 		}
+
 	}
 
 	@Override
