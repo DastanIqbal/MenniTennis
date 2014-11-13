@@ -74,8 +74,8 @@ public class Ball {
 			speedY = SPEEDY;
 		}
 		if (y > main.getSize().height) {
-			//speedY = -SPEEDY;
-			isgameover=true;
+			speedY = -SPEEDY;
+			//isgameover=true;
 		}
 
 		detectCollision();

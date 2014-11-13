@@ -1,4 +1,5 @@
 package minitennies;
+
 import java.awt.Rectangle;
 
 import IqbalUtils.Logging;
@@ -8,6 +9,11 @@ public class Brick {
 	private int x, y, speed;
 	private Rectangle rect;
 	Main main;
+
+	public Brick(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 
 	public Brick(int x, int y, Main main) {
 		this.x = x;
